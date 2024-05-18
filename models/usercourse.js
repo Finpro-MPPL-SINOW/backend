@@ -59,22 +59,6 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      hooks: {
-        beforeCreate: async (myCourse) => {
-          const course = await myCourse.getCourse()
-
-          await course.update({
-            totalUser: course.totalUser + 1,
-          })
-        },
-        beforeDestroy: async (myCourse) => {
-          const course = await myCourse.getCourse()
-
-          await course.update({
-            totalUser: course.totalUser - 1,
-          })
-        },
-      },
       sequelize,
       modelName: 'MyCourse',
     },

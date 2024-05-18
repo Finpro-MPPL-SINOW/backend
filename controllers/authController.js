@@ -55,6 +55,15 @@ const login = async (req, res, next) => {
       return next(new ApiError('Email belum diverifikasi', 400))
     }
 
+    if (!user.password) {
+      return next(
+        new ApiError(
+          'Password belum diatur, silahkan login dengan google',
+          400,
+        ),
+      )
+    }
+
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
@@ -533,8 +542,7 @@ const reqResetPassword = async (req, res, next) => {
       return next(new ApiError('Email tidak terdaftar', 400))
     }
 
-    const data = await sendResetPasswordEmail(auth, next)
-    console.log(data)
+    await sendResetPasswordEmail(auth, next)
 
     return res.status(200).json({
       status: 'Success',

@@ -6,15 +6,15 @@ const uploader = require('../middlewares/uploader')
 const { checkUUIDParams } = require('../middlewares/checkUUID')
 
 router.get('/', authenticate, User.myDetails)
+router.patch('/change-password', authenticate, User.changeMyPassword)
+
 router.patch(
-  '/update',
+  '/',
   authenticate,
   uploader.single('image'),
   checkUUIDParams(),
   User.updateMyDetails,
 )
-
-router.patch('/change-password', authenticate, User.changeMyPassword)
 
 router.get('/notifications', authenticate, User.getMyNotifications)
 
